@@ -5,24 +5,20 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 
+@RequiredArgsConstructor
 @Slf4j
 @Component
 public class GoogleAuthenticationVerifier {
 
-    private GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(),  JacksonFactory.getDefaultInstance())
-            // Specify the CLIENT_ID of the app that accesses the backend:
-            .setAudience(Collections.singletonList("830309700264-oq0gkjtdiedfrikgbmucq4r4rjtjff9e.apps.googleusercontent.com"))
-            // Or, if multiple clients access the backend:
-            //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-            .build();
+    private final GoogleIdTokenVerifier verifier;
 
 
     public boolean verify(JsonNode jsonNode) {

@@ -26,7 +26,8 @@ public class LoginController {
     @PostMapping(value = "/tokensignin" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public String submissionResult(@RequestBody  JsonNode jsonNode) {
         log.info("Got token sign in {}",jsonNode.toPrettyString());
-        googleAuthenticationVerifier.verify(jsonNode);
+        boolean isVerified = googleAuthenticationVerifier.verify(jsonNode);
+        log.info("isVerified by google ? = {}",isVerified);
         return "result";
     }
 
